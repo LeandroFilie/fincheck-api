@@ -57,7 +57,9 @@ export class AuthService {
       },
     });
 
-    return user;
+    const token = await this.generateToken(user.id);
+
+    return { token };
   }
 
   async signin(signinDto: SigninDto) {
@@ -76,8 +78,12 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const token = await this.jwtService.signAsync({ sub: user.id });
+    const token = await this.generateToken(user.id);
 
     return { token };
+  }
+
+  private generateToken(userId: string) {
+    return this.jwtService.signAsync({ sub: userId });
   }
 }
