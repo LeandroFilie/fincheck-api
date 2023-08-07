@@ -49,7 +49,19 @@ export class BankAccountsService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} bankAccount`;
+  async remove(userId: string, bankAccountId: string) {
+    const isOwner = await this.bankAccountsRepository.findFirst({
+      where: { id: bankAccountId, userId },
+    });
+
+    if (!isOwner) {
+      throw new NotFoundException('Bank account not found');
+    }
+
+    await this.bankAccountsRepository.delete({
+      where: { id: bankAccountId },
+    });
+
+    return null;
   }
 }
