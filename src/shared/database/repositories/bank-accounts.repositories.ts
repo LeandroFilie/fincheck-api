@@ -10,7 +10,7 @@ export class BankAccountsRepository {
     return this.prismaService.bankAccount.create(createDto);
   }
 
-  findMany(findManyDto: Prisma.BankAccountFindManyArgs) {
+  findMany(findManyDto: Prisma.BankAccountFindManyArgs): Promise<any> {
     return this.prismaService.bankAccount.findMany(findManyDto);
   }
 
