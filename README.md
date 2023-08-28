@@ -8,6 +8,129 @@ Este projeto consiste em uma API seguindo o padrão Rest e tem as seguintes func
   - GET de categorias
 
 ## Documentação da API
+### Autenticação
+#### Faz o cadastro do usuário
+```
+  POST /auth/signup
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `body`      | `json` | `{"name": string, "email": string, "password": string}` |
+
+#### Faz o login do usuário
+```
+  POST /auth/signin
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `body`      | `json` | `{"email": string, "password": string}` |
+
+### Contas Bancárias
+#### Retorna todas as contas bancárias de um usuário
+```
+  GET /bank-accounts
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+
+#### Cria uma conta bancária para um usuário
+```
+  POST /bank-accounts
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+| `body`      | `json` | `{"name": string, "initialBalance": number, "color": string, "type": CHECKING \| INVESTMENT \| CASH}` |
+
+#### Atualiza uma conta bancária de um usuário
+```
+  PUT /bank-accounts/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | O ID da conta bancária |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+| `body`      | `json` | `{"name": string, "initialBalance": number, "color": string, "type": CHECKING \| INVESTMENT \| CASH}` |
+
+#### Exclui uma conta bancária
+```
+  DELETE /bank-accounts/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | O ID da conta bancária |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+
+### Categorias
+#### Retorna todas as categorias de um usuário
+```
+  GET /categories
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+
+### Transações
+#### Retorna as transações de um usuário
+```
+  GET /transactions?month=${month}&year=${year}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+| `month` | `query param` | `mês para limitar a busca de transações` |
+| `year` | `query param` | `ano para limitar a busca de transações` |
+
+#### Cria uma transação
+```
+  POST /transactions
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+| `body`      | `json` | `{"bankAccountId": string, "categoryId": string, "name": string, "value": number, "date": string, "type": INCOME \| EXPENSE}` |
+
+#### Edita uma transação
+```
+  PUT /transactions/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | O ID da transação |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+| `body`      | `json` | `{"bankAccountId": string, "categoryId": string, "name": string, "value": number, "date": string, "type": INCOME \| EXPENSE}` |
+
+#### Exclui uma transação
+```
+  DELETE /transactions/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | O ID da transação |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
+
+
+### Usuários
+#### Retorna todos os dados de um usuário
+```
+  GET /users/me
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `Authorization`      | `Header` | Código JWT gerado no momento da autenticação utilizando o padrão Bearer |
 
 ## Stack utilizada
 - Node.js
